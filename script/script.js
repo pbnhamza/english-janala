@@ -4,12 +4,24 @@ const loadLessons = () => {
     .then((json) => displayLesson(json.data));
 };
 loadLessons();
+
+const manageLoader = (stats) => {
+  if (stats === true) {
+    document.getElementById("loader").classList.remove("hidden");
+    document.getElementById("word-container").classList.add("hidden");
+  } else {
+    document.getElementById("loader").classList.add("hidden");
+    document.getElementById("word-container").classList.remove("hidden");
+  }
+};
+
 const removeActive = () => {
   const allBtnLesson = document.querySelectorAll(".lesson-btn");
   allBtnLesson.forEach((button) => button.classList.remove("active"));
 };
 
 const loadLevelWord = (id) => {
+  manageLoader(true);
   const url = `https://openapi.programming-hero.com/api/level/${id}`;
   fetch(url)
     .then((res) => res.json())
@@ -20,13 +32,46 @@ const loadLevelWord = (id) => {
       displayLevelWords(data.data);
     });
 };
-// {
-// "id": 9,
-// "level": 5,
-// "word": "Illuminate",
-// "meaning": "আলোকিত করা",
-// "pronunciation": "ইলুমিনেট"
-// }
+
+const loadDetails = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/word/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayDetails(details.data);
+};
+
+const createElements = (arr) => {
+  const elements = arr.map((el) => `<span class="btn">${el}</span>`);
+  return elements.join(" ");
+};
+
+const displayDetails = (word) => {
+  const detailsModel = document.getElementById("details-container");
+  detailsModel.innerHTML = `
+  <div class="">
+            <h1 class="text-2xl font-bold">${
+              word.word
+            } <i class="fa-solid fa-microphone-lines"></i>
+              :${word.meaning} 
+            </h1>
+          </div>
+          <div class="">
+            <h1 class="font-bold">Meaning</h1>
+            <p class="font-bold">${word.meaning}</p>
+          </div>
+          <div class="">
+            <h1 class="font-bold">Example</h1>
+            <p>${word.sentence}</p>
+          </div>
+          <div class="">
+            <h1 class="font-bold">Synonym</h1>
+            <div class="">
+            ${createElements(word.synonyms)}
+            </div>
+          </div>
+  `;
+  document.getElementById("word_modal").showModal();
+};
 
 const displayLevelWords = (words) => {
   const wordContainer = document.getElementById("word-container");
@@ -46,6 +91,7 @@ const displayLevelWords = (words) => {
           </h1>
         </div>
       `;
+    manageLoader(false);
     return;
   }
 
@@ -66,7 +112,7 @@ const displayLevelWords = (words) => {
     }</h2>
           <div class="flex justify-between items-center">
             <button 
-            onclick="my_modal_5.showModal()"
+            onclick="loadDetails(${word.id})"
             class="bg-[#1a91ff1a] rounded-xl p-4 hover:bg-[#1a91ff80]">
               <i class="fa-solid fa-circle-info"></i>
             </button>
@@ -78,6 +124,7 @@ const displayLevelWords = (words) => {
     `;
     wordContainer.append(card);
   });
+  manageLoader(false);
 };
 
 const displayLesson = (lessons) => {

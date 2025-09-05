@@ -149,6 +149,35 @@
         class="flex gap-5 flex-wrap justify-center py-5"
       ></div>
     </section>
+    <section class="flex justify-center">
+      <div class="join">
+        <div>
+          <label class="input validator join-item">
+            <svg
+              class="h-[1em] opacity-50"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </g>
+            </svg>
+            <input type="text" placeholder="Search Vocabulary" required />
+          </label>
+        </div>
+        <button class="btn btn-primary btn-outline join-item">Search</button>
+      </div>
+    </section>
+    <section id="loader" class="flex justify-center py-10 hidden">
+      <span class="loading loading-bars loading-xl"></span>
+    </section>
     <section class="w-11/12 mx-auto py-10">
       <div
         id="word-container"
@@ -166,20 +195,19 @@
         </div>
       </div>
     </section>
-    <!-- Open the modal using ID.showModal() method -->
-    <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
-    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-      <div class="modal-box">
-        <h3 class="text-lg font-bold">Hello!</h3>
-        <p class="py-4">Press ESC key or click the button below to close</p>
-        <div class="modal-action">
-          <form method="dialog">
-            <!-- if there is a button in form, it will close the modal -->
-            <button class="btn">Close</button>
-          </form>
+    <section class="">
+      <dialog id="word_modal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+          <div id="details-container" class="space-y-5"></div>
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn">Close</button>
+            </form>
+          </div>
         </div>
-      </div>
-    </dialog>
+      </dialog>
+    </section>
     <script src="./script/script.js"></script>
   </body>
 </html>
