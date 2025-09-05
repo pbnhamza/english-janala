@@ -148,3 +148,21 @@ const displayLesson = (lessons) => {
     levelContainer.append(btnDiv);
   }
 };
+
+document.getElementById("btn-search").addEventListener("click", () => {
+  removeActive();
+  const inputValue = document.getElementById("input-search");
+
+  const value = inputValue.value.trim().toLowerCase();
+
+  fetch("https://openapi.programming-hero.com/api/words/all")
+    .then((res) => res.json())
+    .then((data) => {
+      const allWords = data.data;
+
+      const filterWord = allWords.filter((word) =>
+        word.word.toLowerCase().includes(value)
+      );
+      displayLevelWords(filterWord);
+    });
+});
