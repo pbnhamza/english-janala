@@ -73,6 +73,12 @@ const displayDetails = (word) => {
   document.getElementById("word_modal").showModal();
 };
 
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-US"; // English
+  window.speechSynthesis.speak(utterance);
+}
+
 const displayLevelWords = (words) => {
   const wordContainer = document.getElementById("word-container");
   wordContainer.innerHTML = "";
@@ -116,7 +122,9 @@ const displayLevelWords = (words) => {
             class="bg-[#1a91ff1a] rounded-xl p-4 hover:bg-[#1a91ff80]">
               <i class="fa-solid fa-circle-info"></i>
             </button>
-            <button class="bg-[#1a91ff1a] rounded-xl p-4 hover:bg-[#1a91ff80]">
+            <button 
+            onclick="pronounceWord('${word.word}')"
+            class="bg-[#1a91ff1a] rounded-xl p-4 hover:bg-[#1a91ff80]">
               <i class="fa-solid fa-volume-high"></i>
             </button>
           </div>
